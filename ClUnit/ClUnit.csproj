@@ -8,6 +8,10 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\ClUnit.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>

@@ -12,9 +12,11 @@ they are reliable and perform as expected.
 
 ## Getting Started
 
-Simply install the [nuget package](...).
-
 Like other testing frameworks, ClUnit uses attributed methods for tests;
+
+### Via Nuget
+
+If using the [nuget package](...):
 
 ```cs
 namespace ClExample;
@@ -29,7 +31,19 @@ public class MyTestClass
 }
 ```
 
-To use it, call the release excutable:
+From here, you are reccomended to create a Debug task in your project:
+
+```msbuild
+<Target Name="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
+    <Exec WorkingDirectory="$(OutDir)" Command="./ClUnit $(TargetPath)"/>
+</Target>
+```
+
+Which will run your tests after every build.
+
+### Via Executable
+
+If you install it directly, use your desired [release excutable](https://github.com/zeplar-exe/ClUnit/releases/):
 
 ```bash
 > ./ClUnit <MyAssemblyPath>.dll

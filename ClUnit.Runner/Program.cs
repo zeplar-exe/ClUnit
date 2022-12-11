@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 
-using CommandDotNet;
+using ClUnit;
 
-namespace ClUnit;
+using CommandDotNet;
 
 internal class Program
 {

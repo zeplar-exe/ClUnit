@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClUnit", "ClUnit\ClUnit.csproj", "{118018CA-00FC-4F2D-8E08-07FC693A3410}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummySuiteTest", "DummySuiteTest\DummySuiteTest.csproj", "{6C763B62-6FD7-4986-8D2E-9AECA5280ECF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{118018CA-00FC-4F2D-8E08-07FC693A3410}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{118018CA-00FC-4F2D-8E08-07FC693A3410}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{118018CA-00FC-4F2D-8E08-07FC693A3410}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C763B62-6FD7-4986-8D2E-9AECA5280ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C763B62-6FD7-4986-8D2E-9AECA5280ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C763B62-6FD7-4986-8D2E-9AECA5280ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C763B62-6FD7-4986-8D2E-9AECA5280ECF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

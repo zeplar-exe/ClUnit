@@ -13,6 +13,11 @@ public static class TextAssert
     {
         AssertCondition(() => regex.Match(text).Success);
     }
+    
+    public static void MatchesFormat(this string text, string regexPattern)
+    {
+        AssertCondition(() => Regex.Match(text, regexPattern).Success);
+    }
 
     public static void Contains(this string text, string other)
     {
@@ -43,6 +48,6 @@ public static class TextAssert
     private static void AssertCondition(Func<bool> func)
     {
         if (!func.Invoke())
-            throw new AssertFailedException();
+            BasicAssert.Failure();
     }
 }

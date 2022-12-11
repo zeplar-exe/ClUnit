@@ -28,7 +28,7 @@ public partial class CommandLine
     public static string AssertSuccess(string command)
     {
         if (!TryExecute(command, out var output))
-            throw new AssertFailedException();
+            BasicAssert.Failure();
 
         return output;
     }
@@ -36,7 +36,7 @@ public partial class CommandLine
     public static string AssertFailure(string command)
     {
         if (TryExecute(command, out var output))
-            throw new AssertFailedException();
+            BasicAssert.Failure();
 
         return output;
     }
@@ -48,7 +48,7 @@ public partial class CommandLine
             var result = RunCommand(command);
 
             if (result.Code != code)
-                throw new AssertFailedException();
+                BasicAssert.Failure();
 
             return result.Output;
         }
@@ -56,7 +56,9 @@ public partial class CommandLine
         {
             Console.WriteLine(e);
             
-            throw new AssertFailedException();
+            BasicAssert.Failure();
         }
+
+        return string.Empty;
     }
 }

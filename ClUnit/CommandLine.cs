@@ -6,8 +6,24 @@ namespace ClUnit;
 
 public static partial class CommandLine
 {
-    public static TimeSpan CommandTimeout { get; set; } = TimeSpan.FromMilliseconds(5000);
+    private static string? WorkingDirectory { get; set; }
+    private static TimeSpan CommandTimeout { get; set; }
 
+    static CommandLine()
+    {
+        CommandTimeout = TimeSpan.FromMilliseconds(5000);
+    }
+    
+    public static void UseWorkingDirectory(string directory)
+    {
+        WorkingDirectory = directory;
+    }
+
+    public static void UseCommandTimeout(TimeSpan time)
+    {
+        CommandTimeout = time;
+    }
+    
     public static CommandResult RunCommand(string command)
     {
         using var process = new Process
@@ -19,6 +35,7 @@ public static partial class CommandLine
                 WindowStyle = ProcessWindowStyle.Hidden,
                 FileName = "cmd.exe",
                 Arguments = $"/C {command}",
+                WorkingDirectory = WorkingDirectory ?? Directory.GetCurrentDirectory(),
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
             }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ClUnit;
+﻿namespace ClUnit;
 
 /// <summary>
 /// Marks a method as a CLI testing method.

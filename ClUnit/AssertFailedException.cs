@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ClUnit;
+﻿namespace ClUnit;
 
 /// <summary>
 /// Control flow exception for assertions.

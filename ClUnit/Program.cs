@@ -23,7 +23,18 @@ internal class Program
             return 1;
         }
 
-        var assembly = Assembly.LoadFrom(absolutePath);
+        Assembly assembly;
+
+        try
+        {
+            assembly = Assembly.LoadFrom(absolutePath);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"The assembly could not be opened: [{e.GetType().Name}] {e.Message}");
+
+            return 1;
+        }        
 
         if (Assembly.GetAssembly(typeof(CliTestAttribute)) == null)
         {
@@ -59,7 +70,7 @@ internal class Program
 
                         if (verbose)
                         {
-                            Console.WriteLine($"Test '{FullMethodName(method)}' will be skipped due to a creation exception: {exceptionMessage}.");
+                            Console.WriteLine($"Test '{FullMethodName(method)}' will be skipped due to a creation exception: {exceptionMessage}");
                         }
 
                         skipped++;

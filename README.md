@@ -21,11 +21,11 @@ namespace ClExample;
 
 public class MyTestClass
 {
-  [CliTest]
-  public void Test()
-  {
-    CommandLine.AssertSuccess("git init");
-  }
+    [CliTest]
+    public void Test()
+    {
+        CommandLine.AssertSuccess("git init");
+    }
 }
 ```
 

@@ -8,7 +8,6 @@ they are reliable and perform as expected.
 
 - Easy to use, intuitive syntax for defining and running tests.
 - Support for asserting the expected output and return code of your CLI.
-- Flexible and extensible design allows for easy integration with other testing frameworks and tools.
 - Cross-platform compatibility (Windows, macOS, and Linux).
 
 ## Getting Started

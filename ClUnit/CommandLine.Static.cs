@@ -1,4 +1,6 @@
-﻿namespace ClUnit;
+﻿using System;
+
+namespace ClUnit;
 
 public partial class CommandLine
 {

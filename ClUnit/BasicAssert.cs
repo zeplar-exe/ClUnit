@@ -1,4 +1,6 @@
-﻿namespace ClUnit;
+﻿using System;
+
+namespace ClUnit;
 
 /// <summary>
 /// Low-level assert operations.

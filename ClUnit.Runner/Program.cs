@@ -7,6 +7,8 @@ using CommandDotNet;
 
 internal class Program
 {
+    private TextWriter InitialTextWriter { get; } = Console.Out;
+    
     public static int Main(string[] args)
     {
         return new AppRunner<Program>().Run(args);
@@ -54,6 +56,16 @@ internal class Program
         var failed = 0;
         var skipped = 0;
         
+        Exception? exceptionThrown = null;
+        
+        AppDomain.CurrentDomain.FirstChanceException += (sender, args) =>
+        {
+            if (args.Exception is AssertSuccessException or AssertFailedException)
+                Console.SetOut(TextWriter.Null); // Suppress assert exception output
+
+            exceptionThrown = args.Exception;
+        };
+        
         foreach (var type in assembly.GetTypes())
         {
             foreach (var method in type.GetMethods())
@@ -86,6 +98,26 @@ internal class Program
                     }
                 }
 
+                void HandleException(Exception e)
+                {
+                    if (e.InnerException is AssertSuccessException)
+                    {
+                        succeeded++;
+                    }
+                    else
+                    {
+                        if (e.InnerException is not AssertFailedException)
+                            throw e; // See https://stackoverflow.com/a/27242130/16324801
+
+                        if (verbose)
+                        {
+                            FormattedOutput.Plain(OutputMessages.TestFailure, FullMethodName(method));
+                        }
+
+                        failed++;
+                    }
+                }
+
                 try
                 {
                     method.Invoke(instance, null);
@@ -99,23 +131,17 @@ internal class Program
                 }
                 catch (Exception e)
                 {
-                    if (e.InnerException is AssertSuccessException)
-                    {
-                        succeeded++;
-                    }
-                    else
-                    {
-                        if (e.InnerException is not AssertFailedException)
-                            throw; // See https://stackoverflow.com/a/27242130/16324801
+                    HandleException(e);
 
-                        if (verbose)
-                        {
-                            FormattedOutput.Plain(OutputMessages.TestFailure, FullMethodName(method));
-                        }
-
-                        failed++;
-                    }
+                    exceptionThrown = null;
                 }
+
+                if (exceptionThrown != null)
+                {
+                    HandleException(exceptionThrown);
+                }
+                
+                Console.SetOut(InitialTextWriter);
             }
         }
 

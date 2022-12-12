@@ -1,8 +1,9 @@
 ﻿using System.Reflection;
 
-using CommandDotNet;
+using ClUnit;
+using ClUnit.Runner;
 
-namespace ClUnit;
+using CommandDotNet;
 
 internal class Program
 {
@@ -12,13 +13,19 @@ internal class Program
     }
 
     [DefaultCommand]
-    public int Execute(string filePath, [Option('v', "verbose")] bool verbose = false)
+    public int Execute(string filePath, 
+        [Option('v', "verbose")] bool verbose = false,
+        [Option('q', "quiet")] bool quiet = false,
+        [Option("simpleResult")] bool simpleResult = false)
     {
+        if (quiet)
+            verbose = false;
+        
         var absolutePath = GetAbsolutePath(filePath);
         
         if (!File.Exists(absolutePath))
         {
-            Console.WriteLine($"Expected a file ({filePath} does not exist).");
+            FormattedOutput.Plain(OutputMessages.FileNotFound, filePath);
 
             return 1;
         }
@@ -31,14 +38,14 @@ internal class Program
         }
         catch (Exception e)
         {
-            Console.WriteLine($"The assembly could not be opened: [{e.GetType().Name}] {e.Message}");
+            FormattedOutput.Plain(OutputMessages.AssemblyLoadFailure, CreateExceptionMessage(e));
 
             return 1;
         }        
 
         if (Assembly.GetAssembly(typeof(CliTestAttribute)) == null)
         {
-            Console.WriteLine("The input assembly does not use ClUnit (or has a differing version).");
+            FormattedOutput.Plain(OutputMessages.InvalidAssembly);
 
             return 1;
         }
@@ -66,11 +73,11 @@ internal class Program
                     }
                     catch (Exception e)
                     {
-                        var exceptionMessage = $"[{e.GetType().Name}] {e.Message}";
-
                         if (verbose)
                         {
-                            Console.WriteLine($"Test '{FullMethodName(method)}' will be skipped due to a creation exception: {exceptionMessage}");
+                            FormattedOutput.Plain(
+                                OutputMessages.CreationException,
+                                FullMethodName(method), CreateExceptionMessage(e));
                         }
 
                         skipped++;
@@ -85,29 +92,50 @@ internal class Program
 
                     if (verbose)
                     {
-                        Console.WriteLine($"Test '{FullMethodName(method)}' succeeded.");
+                        FormattedOutput.Plain(OutputMessages.TestSuccess, FullMethodName(method));
                     }
 
                     succeeded++;
                 }
                 catch (Exception e)
                 {
-                    if (e.InnerException is not AssertFailedException)
-                        throw; // See https://stackoverflow.com/a/27242130/16324801
-
-                    if (verbose)
+                    if (e.InnerException is AssertSuccessException)
                     {
-                        Console.WriteLine($"Test '{FullMethodName(method)}' failed.");
+                        succeeded++;
                     }
+                    else
+                    {
+                        if (e.InnerException is not AssertFailedException)
+                            throw; // See https://stackoverflow.com/a/27242130/16324801
 
-                    failed++;
+                        if (verbose)
+                        {
+                            FormattedOutput.Plain(OutputMessages.TestFailure, FullMethodName(method));
+                        }
+
+                        failed++;
+                    }
                 }
             }
         }
-        
-        Console.WriteLine($"Test Run Result: {succeeded} Succeeded, {failed} Failed, {skipped} Skipped");
+
+        if (simpleResult)
+        {
+            FormattedOutput.Plain(succeeded);
+            FormattedOutput.Plain(failed);
+            FormattedOutput.Plain(skipped);
+        }
+        else if (!quiet)
+        {
+            FormattedOutput.Plain(OutputMessages.RunResult, succeeded, failed, skipped);
+        }
 
         return 0;
+    }
+
+    private string CreateExceptionMessage(Exception exception)
+    {
+        return $"[{exception.GetType().Name}] {exception.Message}";
     }
 
     private string FullMethodName(MethodInfo info)

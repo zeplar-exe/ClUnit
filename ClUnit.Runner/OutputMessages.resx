@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="CreationException" xml:space="preserve">
+        <value>Test '{0}' will be skipped due to a creation exception: {1}</value>
+    </data>
+    <data name="InvalidAssembly" xml:space="preserve">
+        <value>The input assembly does not use ClUnit (or has a differing version).</value>
+    </data>
+    <data name="AssemblyLoadFailure" xml:space="preserve">
+        <value>The assembly could not be opened: {exceptionMessage}</value>
+    </data>
+    <data name="FileNotFound" xml:space="preserve">
+        <value>Expected a file ({0} does not exist).</value>
+    </data>
+    <data name="TestSuccess" xml:space="preserve">
+        <value>Test '{0}' succeeded.</value>
+    </data>
+    <data name="TestFailure" xml:space="preserve">
+        <value>Test '{0}' failed.</value>
+    </data>
+    <data name="RunResult" xml:space="preserve">
+        <value>Test Run Result: {0} Succeeded, {1} Failed, {2} Skipped</value>
+    </data>
+</root>

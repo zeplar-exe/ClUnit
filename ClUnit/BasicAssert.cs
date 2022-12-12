@@ -6,11 +6,11 @@
 public static class BasicAssert
 {
     /// <summary>
-    /// Does nothing, only here for show.
+    /// Throws an <see cref="AssertSuccessException"/>.
     /// </summary>
     public static void Success()
     {
-        
+        throw new AssertSuccessException();
     }
     
     /// <summary>

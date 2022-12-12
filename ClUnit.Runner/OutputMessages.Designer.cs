@@ -96,7 +96,7 @@ namespace ClUnit.Runner {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test Run Result: {0} Succeeded, {0} Failed, {0} Skipped.
+        ///   Looks up a localized string similar to Test Run Result: {0} Succeeded, {1} Failed, {2} Skipped.
         /// </summary>
         internal static string RunResult {
             get {

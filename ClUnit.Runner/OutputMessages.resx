@@ -37,6 +37,6 @@
         <value>Test '{0}' failed.</value>
     </data>
     <data name="RunResult" xml:space="preserve">
-        <value>Test Run Result: {0} Succeeded, {0} Failed, {0} Skipped</value>
+        <value>Test Run Result: {0} Succeeded, {1} Failed, {2} Skipped</value>
     </data>
 </root>

@@ -93,7 +93,6 @@ internal class Program
                     if (verbose)
                     {
                         FormattedOutput.Plain(OutputMessages.TestSuccess, FullMethodName(method));
-                        Console.WriteLine();
                     }
 
                     succeeded++;

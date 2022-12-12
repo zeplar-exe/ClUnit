@@ -15,8 +15,12 @@ internal class Program
     [DefaultCommand]
     public int Execute(string filePath, 
         [Option('v', "verbose")] bool verbose = false,
+        [Option('q', "quiet")] bool quiet = false,
         [Option("simpleResult")] bool simpleResult = false)
     {
+        if (quiet)
+            verbose = false;
+        
         var absolutePath = GetAbsolutePath(filePath);
         
         if (!File.Exists(absolutePath))
@@ -115,7 +119,7 @@ internal class Program
             FormattedOutput.Plain(failed);
             FormattedOutput.Plain(skipped);
         }
-        else
+        else if (!quiet)
         {
             FormattedOutput.Plain(OutputMessages.RunResult, succeeded, failed, skipped);
         }

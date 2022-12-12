@@ -99,15 +99,22 @@ internal class Program
                 }
                 catch (Exception e)
                 {
-                    if (e.InnerException is not AssertFailedException)
-                        throw; // See https://stackoverflow.com/a/27242130/16324801
-
-                    if (verbose)
+                    if (e.InnerException is AssertSuccessException)
                     {
-                        FormattedOutput.Plain(OutputMessages.TestFailure, FullMethodName(method));
+                        succeeded++;
                     }
+                    else
+                    {
+                        if (e.InnerException is not AssertFailedException)
+                            throw; // See https://stackoverflow.com/a/27242130/16324801
 
-                    failed++;
+                        if (verbose)
+                        {
+                            FormattedOutput.Plain(OutputMessages.TestFailure, FullMethodName(method));
+                        }
+
+                        failed++;
+                    }
                 }
             }
         }

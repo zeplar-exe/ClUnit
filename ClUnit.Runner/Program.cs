@@ -7,8 +7,6 @@ using CommandDotNet;
 
 internal class Program
 {
-    private TextWriter InitialTextWriter { get; } = Console.Out;
-    
     public static int Main(string[] args)
     {
         return new AppRunner<Program>().Run(args);
@@ -118,6 +116,8 @@ internal class Program
                     }
                 }
 
+                var initialTextWriter = Console.Out;
+
                 try
                 {
                     method.Invoke(instance, null);
@@ -141,7 +141,7 @@ internal class Program
                     HandleException(exceptionThrown);
                 }
                 
-                Console.SetOut(InitialTextWriter);
+                Console.SetOut(initialTextWriter);
             }
         }
 

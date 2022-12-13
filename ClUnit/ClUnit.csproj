@@ -30,6 +30,7 @@
 
     <ItemGroup>
       <PackageReference Include="CommandDotNet" Version="7.0.1" />
+      <PackageReference Include="NUnit" Version="3.13.3" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace ClUnit;
+﻿using NUnit.Framework;
+
+namespace ClUnit;
 
 public partial class CommandLine
 {
@@ -43,7 +45,7 @@ public partial class CommandLine
     public static string AssertSuccess(string command)
     {
         if (!TryExecute(command, out var output))
-            BasicAssert.Failure();
+            Assert.Fail();
 
         return output;
     }
@@ -56,7 +58,7 @@ public partial class CommandLine
     public static string AssertFailure(string command)
     {
         if (TryExecute(command, out var output))
-            BasicAssert.Failure();
+            Assert.Fail();
 
         return output;
     }
@@ -69,22 +71,11 @@ public partial class CommandLine
     /// <returns>The textual output of the command.</returns>
     public static string AssertCode(string command, int code)
     {
-        try
-        {
-            var result = RunCommand(command);
+        var result = RunCommand(command);
 
-            if (result.Code != code)
-                BasicAssert.Failure();
+        if (result.Code != code)
+            Assert.Fail();
 
-            return result.Output;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            
-            BasicAssert.Failure();
-        }
-
-        return string.Empty;
+        return result.Output;
     }
 }

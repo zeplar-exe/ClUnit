@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
+using NUnit.Framework;
+
 namespace ClUnit;
 
 /// <summary>
@@ -75,6 +77,6 @@ public static class TextAssert
     private static void AssertCondition(Func<bool> func)
     {
         if (!func.Invoke())
-            BasicAssert.Failure();
+            Assert.Fail();
     }
 }

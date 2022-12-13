@@ -39,7 +39,6 @@ public static partial class CommandLine
     /// <param name="command">The command to run.</param>
     /// <returns>The output text and error code of the command (in a <see cref="CommandResult"/> object).</returns>
     public static CommandResult RunCommand(string command)
-    
     {
         using var process = new Process
         {

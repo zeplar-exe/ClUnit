@@ -1,28 +1,30 @@
 ﻿using ClUnit;
 
+using NUnit.Framework;
+
 namespace DummySuiteTest;
 
 public class Tests
 {
-    [CliTest]
+    [Test]
     public void SomeTest()
     {
         CommandLine.AssertFailure("git");
     }
     
-    [CliTest]
+    [Test]
     public void SomeTest2()
     {
         CommandLine.AssertSuccess("git");
     }
     
-    [CliTest]
+    [Test]
     public void SomeTest3()
     {
         CommandLine.AssertCode("git", 1);
     }
     
-    [CliTest]
+    [Test]
     public void SomeTest4()
     {
         CommandLine.AssertFailure("psagjoaiebgak:13tqfs");
@@ -30,7 +32,7 @@ public class Tests
 
     public class Nested
     {
-        [CliTest]
+        [Test]
         public void SomeTest()
         {
             CommandLine.AssertSuccess("ls");
@@ -44,7 +46,7 @@ public class Tests
             
         }
 
-        [CliTest]
+        [Test]
         public void PassedTest()
         {
             CommandLine.AssertSuccess("ls");

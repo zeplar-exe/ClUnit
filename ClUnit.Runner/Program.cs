@@ -31,6 +31,7 @@ internal class Program
         }
 
         Assembly assembly;
+        var referencedAssemblies = new List<Assembly>();
 
         try
         {
@@ -39,13 +40,6 @@ internal class Program
         catch (Exception e)
         {
             FormattedOutput.Plain(OutputMessages.AssemblyLoadFailure, CreateExceptionMessage(e));
-
-            return 1;
-        }        
-
-        if (Assembly.GetAssembly(typeof(CliTestAttribute)) == null)
-        {
-            FormattedOutput.Plain(OutputMessages.InvalidAssembly);
 
             return 1;
         }
@@ -58,17 +52,32 @@ internal class Program
         
         AppDomain.CurrentDomain.FirstChanceException += (sender, args) =>
         {
-            if (args.Exception is AssertSuccessException or AssertFailedException)
+            if (ExceptionNameIs(args.Exception, "AssertSuccessException", "AssertFailedException"))
                 Console.SetOut(TextWriter.Null); // Suppress assert exception output
 
             exceptionThrown = args.Exception;
         };
-        
+
         foreach (var type in assembly.GetTypes())
         {
             foreach (var method in type.GetMethods())
             {
-                var attribute = method.GetCustomAttribute<CliTestAttribute>();
+                Type? testAttributeType = null;
+                
+                foreach (var data in method.GetCustomAttributesData())
+                {
+                    if (data.AttributeType.Name == "CliTestAttribute")
+                    {
+                        testAttributeType = data.AttributeType;
+                        
+                        break;
+                    }
+                }
+                
+                if (testAttributeType == null)
+                    continue;
+                
+                var attribute = method.GetCustomAttribute(testAttributeType);
 
                 if (attribute == null)
                     continue;
@@ -98,14 +107,16 @@ internal class Program
 
                 void HandleException(Exception e)
                 {
-                    if (e.InnerException is AssertSuccessException)
+                    // See https://stackoverflow.com/a/27242130/16324801
+                    
+                    if (ExceptionNameIs(e.InnerException, "AssertSuccessException"))
                     {
                         succeeded++;
                     }
                     else
                     {
-                        if (e.InnerException is not AssertFailedException)
-                            throw e; // See https://stackoverflow.com/a/27242130/16324801
+                        if (!ExceptionNameIs(e.InnerException, "AssertFailedException"))
+                            throw e;
 
                         if (verbose)
                         {
@@ -176,5 +187,20 @@ internal class Program
             return path;
 
         return Path.Join(Directory.GetCurrentDirectory(), path);
+    }
+    
+    private bool ExceptionNameIs(Exception? e, params string[] name)
+    {
+        return TypeNameIs(e?.GetType(), name);
+    }
+
+    private bool TypeNameIs(Type? type, params string[] name)
+    {
+        if (type == null)
+            return false;
+        
+        var target = type.Name;
+
+        return name.Any(n => target == n);
     }
 }

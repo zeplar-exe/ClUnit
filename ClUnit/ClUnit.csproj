@@ -5,6 +5,17 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.1.1</Version>
+        <Title>ClUnit</Title>
+        <Authors>zeplar-exe</Authors>
+        <Description>ClUnit is a unit testing framework for command line interfaces (CLIs) written in C#. With ClUnit, you can easily create and run unit tests for your CLIs, ensuring that they are reliable and perform as expected.</Description>
+        <PackageProjectUrl>https://github.com/zeplar-exe/ClUnit</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/zeplar-exe/ClUnit/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/zeplar-exe/ClUnit</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>cli unit-testing c#</PackageTags>
+        <PackageReleaseNotes>Remove CommandDotNet dependency</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

@@ -60,7 +60,7 @@ namespace ClUnit.Runner {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The assembly could not be opened: {exceptionMessage}.
+        ///   Looks up a localized string similar to The assembly could not be opened: {0}.
         /// </summary>
         internal static string AssemblyLoadFailure {
             get {
@@ -87,7 +87,7 @@ namespace ClUnit.Runner {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The input assembly does not use ClUnit (or has a differing version)..
+        ///   Looks up a localized string similar to The input assembly does not use ClUnit..
         /// </summary>
         internal static string InvalidAssembly {
             get {

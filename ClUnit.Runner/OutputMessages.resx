@@ -22,10 +22,10 @@
         <value>Test '{0}' will be skipped due to a creation exception: {1}</value>
     </data>
     <data name="InvalidAssembly" xml:space="preserve">
-        <value>The input assembly does not use ClUnit (or has a differing version).</value>
+        <value>The input assembly does not use ClUnit.</value>
     </data>
     <data name="AssemblyLoadFailure" xml:space="preserve">
-        <value>The assembly could not be opened: {exceptionMessage}</value>
+        <value>The assembly could not be opened: {0}</value>
     </data>
     <data name="FileNotFound" xml:space="preserve">
         <value>Expected a file ({0} does not exist).</value>

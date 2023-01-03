@@ -1,3 +1,5 @@
+## This project has been discontinued
+
 # ClUnit
 
 ClUnit is an NUnit extension for command line interfaces (CLIs). 
